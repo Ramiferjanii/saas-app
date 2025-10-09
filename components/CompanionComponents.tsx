@@ -122,7 +122,7 @@ const CompanionComponent = ({
 
       const assistantOverrides = {
         variableValues: { subject, topic, style },
-        clientMessages: "transcript" as const,
+        clientMessages: ["transcript"] as any,
       };
 
       await vapi.start(assistantConfig, assistantOverrides);
