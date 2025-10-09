@@ -131,9 +131,10 @@ const CompanionComponent = ({
       setCallStatus(CallStatus.INACTIVE);
       
       // More specific error messages
-      if (error?.error?.message?.includes('401') || error?.error?.message?.includes('unauthorized')) {
+      const errorMessage = (error as any)?.error?.message || (error as any)?.message || '';
+      if (errorMessage.includes('401') || errorMessage.includes('unauthorized')) {
         alert("❌ VAPI Authentication Failed\n\nYour VAPI token is invalid or expired.\n\nTo fix this:\n1. Go to https://vapi.ai\n2. Sign up/login to your account\n3. Get a new Web Token from the dashboard\n4. Update your .env.local file\n5. Restart your development server");
-      } else if (error?.error?.message?.includes('400')) {
+      } else if (errorMessage.includes('400')) {
         alert("❌ VAPI Configuration Error\n\nThere's an issue with your VAPI configuration.\n\nCommon fixes:\n1. Check your VAPI token is valid\n2. Ensure you have sufficient credits\n3. Verify your voice IDs are correct\n4. Check the browser console for more details");
       } else {
         alert("❌ Voice Call Failed\n\nPlease check your VAPI configuration.\n\nTo get help:\n1. Check the browser console for details\n2. Visit https://docs.vapi.ai for documentation\n3. Ensure your VAPI account is active");
