@@ -45,13 +45,44 @@ npm run dev
 ### 4. VAPI Setup & Troubleshooting
 
 #### Getting VAPI Token:
-1. Sign up at [vapi.ai](https://vapi.ai)
-2. Go to your dashboard
-3. Copy your Web Token from the API section
-4. Add it to your `.env.local` file as `NEXT_PUBLIC_VAPI_WEB_TOKEN`
+1. **Sign up at [vapi.ai](https://vapi.ai)**
+2. **Go to your dashboard**
+3. **Navigate to API section**
+4. **Copy your Web Token**
+5. **Add it to your `.env.local` file as `NEXT_PUBLIC_VAPI_WEB_TOKEN`**
+
+#### Testing Your VAPI Token:
+Open your browser console and run this code to test your token:
+```javascript
+const testVAPIToken = async (token) => {
+  try {
+    const response = await fetch('https://api.vapi.ai/assistant', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (response.ok) {
+      console.log('✅ VAPI token is valid!');
+      return true;
+    } else {
+      console.log('❌ VAPI token is invalid:', response.status, response.statusText);
+      return false;
+    }
+  } catch (error) {
+    console.log('❌ Error testing VAPI token:', error);
+    return false;
+  }
+};
+
+// Test your token
+testVAPIToken('YOUR_VAPI_TOKEN_HERE');
+```
 
 #### Common VAPI Issues:
-- **400 Error**: Usually means invalid token or configuration
+- **400 Error**: Usually means invalid token, insufficient credits, or configuration issue
+- **401 Error**: Invalid or expired token
 - **Voice not working**: Check if voice IDs are valid
 - **Call fails**: Ensure your VAPI account has sufficient credits
 
