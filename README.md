@@ -1,50 +1,180 @@
-Create an LMS SaaS app from scratch featuring user authentication, subscriptions, and payments using Next.js, Supabase, and Stripe! You'll build and deploy a real-time teaching platform with Vapi, integrate an AI vocal agent, and deliver seamless, interactive learning sessions.
+# 🎓 Converso - AI-Powered Learning Companion
 
-If you're getting started and need assistance or face any bugs, join our active Discord community with over **50k+** members. It's a place where people help each other out.
+**Converso** is a cutting-edge SaaS platform that provides real-time AI teaching companions for interactive learning across multiple subjects. Built with Next.js 15, React 19, and powered by advanced AI voice technology.
 
-<a href="https://discord.com/invite/n6EdbFJ" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/618f4872-1e10-42da-8213-1d69e486d02e" /></a>
+![Converso Logo](public/images/logo.svg)
 
-## <a name="tech-stack">⚙️ Tech Stack</a>
+## ✨ Features
 
-- **[Clerk](https://jsm.dev/converso-clerk)** is a unified platform for authentication, user management, and billing. It offers embeddable UI components, flexible APIs, and admin dashboards for secure user management. Clerk also simplifies subscription management, allowing you to define plans, create pricing pages, and control access based on subscription tiers—all in one solution.
+### 🤖 AI Teaching Companions
+- **Interactive AI Tutors**: Personalized learning companions for various subjects
+- **Voice-Enabled Learning**: Real-time voice conversations with AI tutors
+- **Subject-Specific Companions**: Specialized AI tutors for different academic areas
+- **Adaptive Learning**: AI companions that adjust to your learning pace and style
 
-* **[Next.js](https://nextjs.org/)** is a powerful React framework that enables the development of fast, scalable web applications with features like server-side rendering, static site generation, and API routes for building full-stack applications.
+### 📚 Multi-Subject Support
+- **Mathematics**: Calculus, algebra, geometry, and more
+- **Science**: Physics, chemistry, biology, neuroscience
+- **Language & Literature**: English literature, vocabulary building
+- **History**: World events, historical analysis
+- **Coding**: Programming concepts, algorithms, data structures
+- **Economics**: Market principles, supply & demand
 
-* **[Sentry](https://jsm.dev/converso-sentry)** is an error tracking and performance monitoring tool that helps developers fix bugs faster by providing real-time alerts, stack traces, and performance insights.
+### 🎯 Key Features
+- **Companion Library**: Browse and discover AI tutors
+- **Search & Filter**: Find companions by subject or topic
+- **Bookmark System**: Save your favorite companions
+- **Session Tracking**: Monitor your learning progress
+- **User Authentication**: Secure login with Clerk
+- **Responsive Design**: Works seamlessly on all devices
 
-* **[shadcn/ui](https://ui.shadcn.com/)** is a customizable component library built on Radix UI and Tailwind CSS. It offers a modern, accessible design system with pre-built components that are easy to theme and extend, making it ideal for building polished UIs with minimal effort.
+### 🎨 Modern UI/UX
+- **Beautiful Interface**: Clean, modern design with Tailwind CSS
+- **Subject Color Coding**: Visual organization by subject areas
+- **Interactive Cards**: Engaging companion cards with animations
+- **Mobile-First**: Optimized for mobile and desktop experiences
 
-- **[Supabase](https://supabase.com/)** is an open-source backend-as-a-service platform that provides instant APIs, real-time subscriptions, authentication, storage, and a PostgreSQL database, enabling developers to build scalable and secure applications with ease.
+## 🚀 Tech Stack
 
-* **[Tailwind CSS](https://tailwindcss.com/)** is a utility-first CSS framework that allows developers to design custom user interfaces by applying low-level utility classes directly in HTML, streamlining the design process.
-* **[TypeScript](https://www.typescriptlang.org/)** is a superset of JavaScript that adds static typing, providing better tooling, code quality, and error detection for developers, making it ideal for building large-scale applications.
+### Frontend
+- **Next.js 15** - React framework with App Router
+- **React 19** - Latest React with concurrent features
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix UI** - Accessible component primitives
 
-- **[Vapi](https://jsm.dev/converso-vapi)** is a developer-centric voice AI platform that enables the creation of conversational voice agents with low-latency voice interactions, speech-to-text, and text-to-speech capabilities. It supports multilingual conversations, customizable voices, and seamless integration with various AI models and tools.
+### Backend & Services
+- **Supabase** - Database and authentication
+- **Clerk** - User authentication and management
+- **VAPI AI** - Voice AI integration
+- **Sentry** - Error monitoring and performance tracking
 
-* **[Zod](https://zod.dev/)** is a TypeScript-first schema validation library that provides a simple and expressive way to define and validate data structures. Zod ensures data integrity by catching errors early during development.
+### Development Tools
+- **ESLint** - Code linting and quality
+- **Turbopack** - Fast bundler for development
+- **PostCSS** - CSS processing
 
-## <a name="features">🔋 Features</a>
+## 🛠️ Installation & Setup
 
-👉 **AI Voice Agents**: Take tutoring sessions with voiced AIs specializing in the topics you want to get better at.
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+- Git
 
-👉 **Authentication**: Secure user sign-up and sign-in with Clerk; Google authentication and many more.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Ramiferjanii/saas-app.git
+cd saas-app
+```
 
-👉 **Billing & Subscriptions**: Easily manage plans, upgrades, and payment details.
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-👉 **Bookmarks and Session History**: Let users organise their learning by bookmarking tutors and accessing previous sessions.
+### 3. Environment Variables
+Create a `.env.local` file in the root directory:
 
-👉 **Code Reusability**: Leverage reusable components and a modular codebase for efficient development.
+```env
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
 
-👉 **Create a Tutor**: Create your own AI tutors, choosing a subject, topic, and style of conversation.
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-👉 **Cross-Device Compatibility**: Fully responsive design that works seamlessly across all devices.
+# VAPI AI
+NEXT_PUBLIC_VAPI_WEB_TOKEN=your_vapi_token
 
-👉 **Database Integration**: Uses Supabase for real-time data handling and storage needs.
+# Sentry (Optional)
+SENTRY_DSN=your_sentry_dsn
+```
 
-👉 **Modern UI/UX**: Clean, responsive design built with Tailwind CSS and shadcn/ui for a sleek user experience.
+### 4. Run the Development Server
+```bash
+npm run dev
+```
 
-👉 **Scalable Tech Stack**: Built with Next.js for a fast, production-ready web application that scales seamlessly.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-👉 **Search Functionality**: Find tutors quickly with robust filters and search bar.
+## 📱 Usage
 
-and many more, including code architecture and reusability.
+### Getting Started
+1. **Sign Up/Login**: Create an account or sign in with existing credentials
+2. **Browse Companions**: Explore the companion library
+3. **Filter by Subject**: Use the subject filter to find specific tutors
+4. **Search**: Use the search bar to find companions by topic
+5. **Bookmark**: Save your favorite companions for quick access
+6. **Launch Lessons**: Start interactive learning sessions with AI tutors
+
+### Creating Custom Companions
+1. Navigate to "New Companion"
+2. Fill in companion details (name, subject, topic)
+3. Configure voice settings
+4. Save and start learning
+
+## 🏗️ Project Structure
+
+```
+saas/
+├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   ├── companions/        # Companion pages
+│   ├── sign-in/          # Authentication pages
+│   └── ...
+├── components/            # React components
+│   ├── ui/               # Reusable UI components
+│   └── ...
+├── lib/                  # Utility libraries
+│   ├── actions/          # Server actions
+│   └── ...
+├── constants/            # App constants
+├── types/               # TypeScript definitions
+└── public/              # Static assets
+```
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy automatically
+
+### Other Platforms
+- **Netlify**: Connect GitHub repo and deploy
+- **Railway**: Deploy with one-click setup
+- **DigitalOcean**: Use App Platform
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **VAPI AI** for voice AI capabilities
+- **Clerk** for authentication services
+- **Supabase** for backend infrastructure
+- **Next.js Team** for the amazing framework
+- **Tailwind CSS** for the utility-first CSS framework
+
+## 📞 Support
+
+- **GitHub Issues**: [Report bugs or request features](https://github.com/Ramiferjanii/saas-app/issues)
+- **Email**: [Your email here]
+- **Documentation**: [Link to docs if available]
+
+---
+
+**Built with ❤️ by [Your Name]**
+
+⭐ **Star this repo if you found it helpful!**
