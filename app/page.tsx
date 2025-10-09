@@ -10,9 +10,9 @@ const Page = () => {
     <main>
       <h1  >Popular companions  </h1>
       <section className='home-section' >
-        <CompanionsCard id="123" name='Naura the brainy Explorer' topic="Neural Netwark of the Brain " subject="science" duration={45}  color="#ffda6e" />
-        <CompanionsCard id="34" name='Country the Number Wizard ' topic=" Derivations & Integrals " subject="Math" duration={30}  color="#e5d0ff" />
-        <CompanionsCard  id="23" name='Verba the Vocabulary Builder' topic="Language " subject="Enlish Literature" duration={45}  color="#BDE7FF"/>
+        <CompanionsCard id="123" name='Naura the brainy Explorer' topic="Neural Netwark of the Brain " subject="science" duration={45}  color="#ffda6e" bookmarked={false} />
+        <CompanionsCard id="34" name='Country the Number Wizard ' topic=" Derivations & Integrals " subject="Math" duration={30}  color="#e5d0ff" bookmarked={false} />
+        <CompanionsCard  id="23" name='Verba the Vocabulary Builder' topic="Language " subject="Enlish Literature" duration={45}  color="#BDE7FF" bookmarked={false}/>
       </section>
 
       <section className='home-section' >

@@ -1,15 +1,15 @@
 import CompanionsForm from "@/components/CompanionsForm";
 import React from "react";
 
-const page = () => {
+const NewCompanion = () => {
   return (
-    <main className="min-lg:w1/3 min-md:w-2/3 items-center justify-center ">
-      <article className="w-full gap-' flex flex-col ">
-        <h1>Companions Builder </h1>
+    <main className="min-lg:w-1/3 min-md:w-2/3 items-center justify-center">
+      <article className="w-full gap-4 flex flex-col">
+        <h1>Companions Builder</h1>
         <CompanionsForm />
       </article>
     </main>
   );
 };
 
-export default page;
+export default NewCompanion;

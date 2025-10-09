@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,7 +11,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -23,6 +23,10 @@ import {
 } from "./ui/select";
 import { subjects } from "@/constants";
 import { Textarea } from "./ui/textarea";
+import { createCompanion } from "@/lib/actions/companion.actions";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
+import { useEffect } from "react";
 const formSchema = z.object({
   name: z.string().min(1, { message: "Companion is required" }),
   subject: z.string().min(1, { message: "Subject is required" }),
@@ -35,6 +39,9 @@ const formSchema = z.object({
 const CompanionsForm = () => {
   // 1. Define your form.
   type CompanionsFormValues = z.infer<typeof formSchema>;
+  const router = useRouter();
+  const { isSignedIn, isLoaded, userId } = useAuth();
+  
   const form = useForm<CompanionsFormValues>({
     resolver: zodResolver(formSchema) as any,
     defaultValues: {
@@ -47,9 +54,53 @@ const CompanionsForm = () => {
     },
   });
 
+  // Redirect to sign-in if not authenticated
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      router.push("/sign-in");
+    }
+  }, [isLoaded, isSignedIn, router]);
+
+  // Show loading while checking authentication
+  if (!isLoaded) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
+          <p className="mt-2">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render form if not signed in
+  if (!isSignedIn) {
+    return null;
+  }
+
   // 2. Define a submit handler.
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      console.log("Form submitted with values:", values);
+      console.log("User is signed in:", isSignedIn);
+      console.log("User ID:", userId);
+      
+      if (!userId) {
+        throw new Error("User ID not available");
+      }
+      
+      const companion = await createCompanion({ ...values, author: userId });
+      
+      if (companion) {
+        router.push(`/companions/${companion.id}`);
+      } else {
+        console.error("Error creating companion");
+        router.push(`/`);
+      }
+    } catch (error) {
+      console.error("Failed to create companion:", error);
+      // You could show a toast notification here
+    }
   };
 
   return (
