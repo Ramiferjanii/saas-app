@@ -12,18 +12,27 @@ export const getSubjectColor = (subject: string) => {
 };
 
 export const configureAssistant = (voice: string, style: string) => {
+  // Normalize voice parameter to lowercase
+  const normalizedVoice = voice?.toLowerCase() || "female";
+  const normalizedStyle = style?.toLowerCase() || "casual";
+  
   const voiceId =
-    voices[voice as keyof typeof voices][
-      style as keyof (typeof voices)[keyof typeof voices]
-    ] || "sarah";
+    voices[normalizedVoice as keyof typeof voices]?.[
+      normalizedStyle as keyof (typeof voices)[keyof typeof voices]
+    ] || voices.female.casual; // Default fallback
+
+  console.log("VAPI Configuration:", {
+    voice: normalizedVoice,
+    style: normalizedStyle,
+    voiceId,
+  });
 
   const vapiAssistant: CreateAssistantDTO = {
     name: "Companion",
-    firstMessage:
-      "Hello, let's start the session. Today we'll be talking about {{topic}}.",
+    firstMessage: "Hello! I'm your AI tutor. Let's start learning about {{topic}} today.",
     transcriber: {
       provider: "deepgram",
-      model: "nova-3",
+      model: "nova-2",
       language: "en",
     },
     voice: {
@@ -37,25 +46,23 @@ export const configureAssistant = (voice: string, style: string) => {
     },
     model: {
       provider: "openai",
-      model: "gpt-4",
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "system",
-          content: `You are a highly knowledgeable tutor teaching a real-time voice session with a student. Your goal is to teach the student about the topic and subject.
-
-                    Tutor Guidelines:
-                    Stick to the given topic - {{ topic }} and subject - {{ subject }} and teach the student about it.
-                    Keep the conversation flowing smoothly while maintaining control.
-                    From time to time make sure that the student is following you and understands you.
-                    Break down the topic into smaller parts and teach the student one part at a time.
-                    Keep your style of conversation {{ style }}.
-                    Keep your responses short, like in a real voice conversation.
-                    Do not include any special characters in your responses - this is a voice conversation.
-              `,
+          content: `You are a knowledgeable AI tutor. Teach the student about the topic: {{topic}} in the subject: {{subject}}. 
+          
+          Guidelines:
+          - Keep responses conversational and under 2 sentences
+          - Ask questions to check understanding
+          - Use a {{style}} teaching style
+          - Focus on the specific topic: {{topic}}
+          - Be encouraging and supportive`,
         },
       ],
     },
     clientMessages: "transcript",
   };
+  
   return vapiAssistant;
 };

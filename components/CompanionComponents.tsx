@@ -62,7 +62,19 @@ const CompanionComponent = ({
     const onSpeechStart = () => setIsSpeaking(true);
     const onSpeechEnd = () => setIsSpeaking(false);
 
-    const onError = (error: Error) => console.log("Error", error);
+    const onError = (error: any) => {
+      console.error("VAPI Error:", error);
+      setCallStatus(CallStatus.INACTIVE);
+      
+      // Show user-friendly error message
+      if (error?.error?.message) {
+        alert(`Voice call error: ${error.error.message}`);
+      } else if (error?.message) {
+        alert(`Voice call error: ${error.message}`);
+      } else {
+        alert("Voice call failed. Please check your VAPI configuration.");
+      }
+    };
 
     vapi.on("call-start", onCallStart);
     vapi.on("call-end", onCallEnd);
@@ -93,18 +105,27 @@ const CompanionComponent = ({
   const handleCall = async () => {
     if (!vapi) {
       console.error("VAPI is not initialized. Please check your VAPI token.");
+      alert("Voice AI is not available. Please check your VAPI configuration.");
       return;
     }
     
-    setCallStatus(CallStatus.CONNECTING);
+    try {
+      setCallStatus(CallStatus.CONNECTING);
 
-    const assistantOverrides = {
-      variableValues: { subject, topic, style },
-      clientMessages: "transcript",
-    };
+      const assistantConfig = configureAssistant(voice, style);
+      console.log("Starting VAPI call with config:", assistantConfig);
 
-    // @ts-expect-error
-    vapi.start(configureAssistant(voice, style), assistantOverrides);
+      const assistantOverrides = {
+        variableValues: { subject, topic, style },
+        clientMessages: "transcript" as const,
+      };
+
+      await vapi.start(assistantConfig, assistantOverrides);
+    } catch (error) {
+      console.error("Failed to start VAPI call:", error);
+      setCallStatus(CallStatus.INACTIVE);
+      alert("Failed to start voice call. Please check your VAPI token and configuration.");
+    }
   };
 
   const handleDisconnect = () => {

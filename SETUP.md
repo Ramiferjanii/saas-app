@@ -42,13 +42,35 @@ npm install
 npm run dev
 ```
 
-### 4. Common Issues Fixed
+### 4. VAPI Setup & Troubleshooting
+
+#### Getting VAPI Token:
+1. Sign up at [vapi.ai](https://vapi.ai)
+2. Go to your dashboard
+3. Copy your Web Token from the API section
+4. Add it to your `.env.local` file as `NEXT_PUBLIC_VAPI_WEB_TOKEN`
+
+#### Common VAPI Issues:
+- **400 Error**: Usually means invalid token or configuration
+- **Voice not working**: Check if voice IDs are valid
+- **Call fails**: Ensure your VAPI account has sufficient credits
+
+#### Voice Configuration:
+The app uses these voice IDs:
+- Male Casual: `2BJW5coyhAzSr8STdHbE`
+- Male Formal: `c6SfcYrb2t09NHXiT80T`
+- Female Casual: `ZIlrSGI4jZqobxRKprJz`
+- Female Formal: `sarah`
+
+### 5. Common Issues Fixed
 
 - ✅ Fixed 400 errors from missing environment variables
 - ✅ Fixed VAPI configuration issues
 - ✅ Fixed Supabase connection errors
 - ✅ Removed intentionally failing Sentry API
 - ✅ Added proper error handling for missing services
+- ✅ Fixed voice ID case sensitivity issues
+- ✅ Improved VAPI error handling and user feedback
 
 ## Features
 

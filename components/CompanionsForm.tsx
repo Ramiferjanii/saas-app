@@ -197,7 +197,7 @@ const CompanionsForm = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="male"> Male</SelectItem>
-                    <SelectItem value="Female"> Female</SelectItem>
+                    <SelectItem value="female"> Female</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
