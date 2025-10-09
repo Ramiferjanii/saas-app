@@ -63,7 +63,12 @@ const CompanionComponent = ({
     const onSpeechEnd = () => setIsSpeaking(false);
 
     const onError = (error: any) => {
-      console.error("VAPI Error:", error);
+      console.error("VAPI Error Details:", error);
+      console.error("Error type:", error?.type);
+      console.error("Error stage:", error?.stage);
+      console.error("Error context:", error?.context);
+      console.error("Full error object:", JSON.stringify(error, null, 2));
+      
       setCallStatus(CallStatus.INACTIVE);
       
       // Show user-friendly error message
@@ -72,7 +77,7 @@ const CompanionComponent = ({
       } else if (error?.message) {
         alert(`Voice call error: ${error.message}`);
       } else {
-        alert("Voice call failed. Please check your VAPI configuration.");
+        alert(`Voice call failed. Error type: ${error?.type || 'unknown'}\n\nCheck browser console for details.`);
       }
     };
 
