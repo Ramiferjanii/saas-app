@@ -43,6 +43,8 @@ const CompanionComponent = ({
   }, [isSpeaking, lottieRef]);
 
   useEffect(() => {
+    if (!vapi) return;
+
     const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
 
     const onCallEnd = () => {
@@ -70,28 +72,35 @@ const CompanionComponent = ({
     vapi.on("speech-end", onSpeechEnd);
 
     return () => {
-      vapi.off("call-start", onCallStart);
-      vapi.off("call-end", onCallEnd);
-      vapi.off("message", onMessage);
-      vapi.off("error", onError);
-      vapi.off("speech-start", onSpeechStart);
-      vapi.off("speech-end", onSpeechEnd);
+      if (vapi) {
+        vapi.off("call-start", onCallStart);
+        vapi.off("call-end", onCallEnd);
+        vapi.off("message", onMessage);
+        vapi.off("error", onError);
+        vapi.off("speech-start", onSpeechStart);
+        vapi.off("speech-end", onSpeechEnd);
+      }
     };
-  }, []);
+  }, [vapi]);
 
   const toggleMicrophone = () => {
+    if (!vapi) return;
     const isMuted = vapi.isMuted();
     vapi.setMuted(!isMuted);
     setIsMuted(!isMuted);
   };
 
   const handleCall = async () => {
+    if (!vapi) {
+      console.error("VAPI is not initialized. Please check your VAPI token.");
+      return;
+    }
+    
     setCallStatus(CallStatus.CONNECTING);
 
     const assistantOverrides = {
       variableValues: { subject, topic, style },
-      clientMessages: ["transcript"],
-      serverMessages: [],
+      clientMessages: "transcript",
     };
 
     // @ts-expect-error
@@ -99,6 +108,7 @@ const CompanionComponent = ({
   };
 
   const handleDisconnect = () => {
+    if (!vapi) return;
     setCallStatus(CallStatus.FINISHED);
     vapi.stop();
   };
