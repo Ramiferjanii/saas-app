@@ -213,11 +213,17 @@ export const addBookmark = async (companionId: string, path: string) => {
     companion_id: companionId,
     user_id: userId,
   });
+  
+  // Handle missing table gracefully
   if (error) {
-    throw new Error(error.message);
+    console.warn(
+      "Bookmarks table not found, skipping bookmark creation:",
+      error.message
+    );
+    return null;
   }
+  
   // Revalidate the path to force a re-render of the page
-
   revalidatePath(path);
   return data;
 };
@@ -231,9 +237,16 @@ export const removeBookmark = async (companionId: string, path: string) => {
     .delete()
     .eq("companion_id", companionId)
     .eq("user_id", userId);
+    
+  // Handle missing table gracefully
   if (error) {
-    throw new Error(error.message);
+    console.warn(
+      "Bookmarks table not found, skipping bookmark removal:",
+      error.message
+    );
+    return null;
   }
+  
   revalidatePath(path);
   return data;
 };
@@ -245,9 +258,16 @@ export const getBookmarkedCompanions = async (userId: string) => {
     .from("bookmarks")
     .select(`companions:companion_id (*)`) // Notice the (*) to get all the companion data
     .eq("user_id", userId);
+  
+  // Handle missing table gracefully
   if (error) {
-    throw new Error(error.message);
+    console.warn(
+      "Bookmarks table not found, returning empty array:",
+      error.message
+    );
+    return [];
   }
+  
   // We don't need the bookmarks data, so we return only the companions
   return data.map(({ companions }) => companions);
 };
